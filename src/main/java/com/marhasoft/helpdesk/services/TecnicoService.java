@@ -1,6 +1,7 @@
 package com.marhasoft.helpdesk.services;
 
 import com.marhasoft.helpdesk.domain.Tecnico;
+import com.marhasoft.helpdesk.domain.dtos.TecnicoDTO;
 import com.marhasoft.helpdesk.repositories.TecnicoRepository;
 import com.marhasoft.helpdesk.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,5 +23,11 @@ public class TecnicoService {
 
     public List<Tecnico> findAll() {
         return tecnicoRepository.findAll();
+    }
+
+    public Tecnico create(TecnicoDTO tecnicoDTO) {
+        tecnicoDTO.setId(null);
+        Tecnico newTecnico = new Tecnico(tecnicoDTO);
+        return tecnicoRepository.save(newTecnico);
     }
 }
