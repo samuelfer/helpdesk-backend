@@ -2,6 +2,7 @@ package com.marhasoft.helpdesk.services;
 
 import com.marhasoft.helpdesk.domain.Tecnico;
 import com.marhasoft.helpdesk.repositories.TecnicoRepository;
+import com.marhasoft.helpdesk.services.exceptions.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,6 @@ public class TecnicoService {
 
     public Tecnico findById(Integer id) {
         Optional<Tecnico> tecnico = tecnicoRepository.findById(id);
-        return tecnico.orElse(null);
+        return tecnico.orElseThrow(() -> new ObjectNotFoundException("Técnico não encontado com id: "+id));
     }
 }
