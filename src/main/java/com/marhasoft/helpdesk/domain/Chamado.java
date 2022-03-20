@@ -10,7 +10,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-public abstract class Chamado implements Serializable {
+public class Chamado implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
@@ -24,7 +24,7 @@ public abstract class Chamado implements Serializable {
     private Prioridade prioridade;
     private Status status;
     private String titulo;
-    private String Observacoes;
+    private String observacoes;
 
     @ManyToOne
     @JoinColumn(name = "tecnico_id")
@@ -42,7 +42,7 @@ public abstract class Chamado implements Serializable {
         this.prioridade = prioridade;
         this.status = status;
         this.titulo = titulo;
-        Observacoes = observacoes;
+        this.observacoes = observacoes;
         this.tecnico = tecnico;
         this.cliente = cliente;
     }
@@ -96,11 +96,11 @@ public abstract class Chamado implements Serializable {
     }
 
     public String getObservacoes() {
-        return Observacoes;
+        return observacoes;
     }
 
     public void setObservacoes(String observacoes) {
-        Observacoes = observacoes;
+        this.observacoes = observacoes;
     }
 
     public Tecnico getTecnico() {

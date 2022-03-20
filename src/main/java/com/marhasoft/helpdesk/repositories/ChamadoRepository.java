@@ -1,7 +1,7 @@
 package com.marhasoft.helpdesk.repositories;
 
-import com.marhasoft.helpdesk.domain.Pessoa;
+import com.marhasoft.helpdesk.domain.Chamado;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PessoaRepository extends JpaRepository<Pessoa, Integer> {
+public interface ChamadoRepository extends JpaRepository<Chamado, Integer> {
 }
