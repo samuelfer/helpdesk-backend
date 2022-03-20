@@ -1,21 +1,39 @@
 package com.marhasoft.helpdesk.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.marhasoft.helpdesk.domain.enums.Perfil;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public abstract class Pessoa {
+import static javax.persistence.FetchType.EAGER;
 
+@Entity
+public abstract class Pessoa implements Serializable {
+    private static final long serialVersionUID = 1L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Integer id;
     protected String nome;
+
+    @Column(unique = true)
     protected String cpf;
+
+    @Column(unique = true)
+    protected String email;
     protected String senha;
     //HashSet nao vai permitir valores repetidos na lista
+    @ElementCollection(fetch = EAGER)
+    @CollectionTable(name = "perfis")
     protected Set<Integer> perfis = new HashSet<>();
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
     protected LocalDate dataCriacao = LocalDate.now();
 
     public Pessoa() {
