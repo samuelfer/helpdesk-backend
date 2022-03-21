@@ -37,6 +37,14 @@ public class TecnicoService {
         return tecnicoRepository.save(newTecnico);
     }
 
+    public Tecnico update(Integer id, TecnicoDTO tecnicoDTO) {
+        tecnicoDTO.setId(id);
+        Tecnico oldTecnico = findById(id);
+        validaPorCpfAndEmail(tecnicoDTO);
+        oldTecnico = new Tecnico(tecnicoDTO);
+        return tecnicoRepository.save(oldTecnico);
+    }
+
     private void validaPorCpfAndEmail(TecnicoDTO tecnicoDTO) {
         Optional<Pessoa> pessoa = pessoaRepository.findByCpf(tecnicoDTO.getCpf());
         if (pessoa.isPresent() && pessoa.get().getId() != tecnicoDTO.getId()) {
