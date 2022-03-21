@@ -5,6 +5,7 @@ import com.marhasoft.helpdesk.domain.dtos.TecnicoDTO;
 import com.marhasoft.helpdesk.services.TecnicoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -34,6 +35,7 @@ public class TecnicoResources {
         return ResponseEntity.ok().body(tecnicoDTOS);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping
     public ResponseEntity<TecnicoDTO> create(@Valid @RequestBody TecnicoDTO tecnicoDTO) {
         Tecnico newTecnico = tecnicoService.create(tecnicoDTO);
@@ -41,12 +43,14 @@ public class TecnicoResources {
         return ResponseEntity.created(uri).build();
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PutMapping(value = "/{id}")
     public ResponseEntity<TecnicoDTO> update(@PathVariable Integer id, @Valid @RequestBody TecnicoDTO tecnicoDTO) {
         Tecnico tecnico = tecnicoService.update(id, tecnicoDTO);
         return ResponseEntity.ok().body(new TecnicoDTO(tecnico));
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping(value = "/{id}")
     public ResponseEntity<TecnicoDTO> delete(@PathVariable Integer id) {
         tecnicoService.delete(id);
