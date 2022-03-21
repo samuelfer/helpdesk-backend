@@ -20,6 +20,7 @@ public class Tecnico extends Pessoa {
 
     public Tecnico() {
         super();
+        addPerfil(Perfil.CLIENTE);
     }
 
     public Tecnico(Integer id, String nome, String cpf, String email, String senha) {
