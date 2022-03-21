@@ -45,6 +45,14 @@ public class TecnicoService {
         return tecnicoRepository.save(oldTecnico);
     }
 
+    public void delete(Integer id) {
+        Tecnico tecnico = findById(id);
+        if (tecnico.getChamados().size() > 0) {
+            throw new DataIntegrityViolationException("O técnico possui ordens de serviço e não pode ser deletado!");
+        }
+        tecnicoRepository.deleteById(id);
+    }
+
     private void validaPorCpfAndEmail(TecnicoDTO tecnicoDTO) {
         Optional<Pessoa> pessoa = pessoaRepository.findByCpf(tecnicoDTO.getCpf());
         if (pessoa.isPresent() && pessoa.get().getId() != tecnicoDTO.getId()) {
