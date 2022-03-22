@@ -28,6 +28,7 @@ public class ResourceExceptionHanlder {
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<StandardError> dataIntegrityViolationException(DataIntegrityViolationException ex,
                                                                  HttpServletRequest request) {
+        System.out.println("Entrei no dataIntegrityViolationException ");
         StandardError error = new StandardError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
                 "Violação de dados", ex.getMessage(), request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
@@ -36,6 +37,7 @@ public class ResourceExceptionHanlder {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<StandardError> validationErrors(MethodArgumentNotValidException ex,
                                                                          HttpServletRequest request) {
+        System.out.println("Entrei no validationErrors ");
         ValidationError errors = new ValidationError(System.currentTimeMillis(), HttpStatus.BAD_REQUEST.value(),
                "Validation erros", "Erro na validação dos campos", request.getRequestURI());
         //Pegando todos os erros
