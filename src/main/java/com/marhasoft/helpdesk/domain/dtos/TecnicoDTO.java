@@ -32,7 +32,7 @@ public class TecnicoDTO implements Serializable {
 
     public TecnicoDTO() {
         super();
-        addPerfis(Perfil.CLIENTE);
+        addPerfil(Perfil.CLIENTE);
     }
 
     public TecnicoDTO(Tecnico tecnicoObj) {
@@ -42,8 +42,10 @@ public class TecnicoDTO implements Serializable {
         this.cpf = tecnicoObj.getCpf();
         this.email = tecnicoObj.getEmail();
         this.senha = tecnicoObj.getSenha();
+        System.out.println("Entrei"+tecnicoObj.getPerfis());
         this.perfis = tecnicoObj.getPerfis().stream().map(x -> x.getCodigo()).collect(Collectors.toSet());
         this.dataCriacao = tecnicoObj.getDataCriacao();
+        addPerfil(Perfil.CLIENTE);
     }
 
     public Integer getId() {
@@ -90,7 +92,7 @@ public class TecnicoDTO implements Serializable {
         return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
     }
 
-    public void addPerfis(Perfil perfil) {
+    public void addPerfil(Perfil perfil) {
         this.perfis.add(perfil.getCodigo());
     }
 

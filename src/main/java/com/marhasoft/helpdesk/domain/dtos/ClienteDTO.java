@@ -32,7 +32,7 @@ public class ClienteDTO implements Serializable {
 
     public ClienteDTO() {
         super();
-        addPerfis(Perfil.CLIENTE);
+        addPerfil(Perfil.CLIENTE);
     }
 
     public ClienteDTO(Cliente clienteObj) {
@@ -44,6 +44,7 @@ public class ClienteDTO implements Serializable {
         this.senha = clienteObj.getSenha();
         this.perfis = clienteObj.getPerfis().stream().map(x -> x.getCodigo()).collect(Collectors.toSet());
         this.dataCriacao = clienteObj.getDataCriacao();
+        addPerfil(Perfil.CLIENTE);
     }
 
     public Integer getId() {
@@ -90,7 +91,7 @@ public class ClienteDTO implements Serializable {
         return perfis.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
     }
 
-    public void addPerfis(Perfil perfil) {
+    public void addPerfil(Perfil perfil) {
         this.perfis.add(perfil.getCodigo());
     }
 
