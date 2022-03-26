@@ -42,7 +42,6 @@ public class TecnicoDTO implements Serializable {
         this.cpf = tecnicoObj.getCpf();
         this.email = tecnicoObj.getEmail();
         this.senha = tecnicoObj.getSenha();
-        System.out.println("Entrei"+tecnicoObj.getPerfis());
         this.perfis = tecnicoObj.getPerfis().stream().map(x -> x.getCodigo()).collect(Collectors.toSet());
         this.dataCriacao = tecnicoObj.getDataCriacao();
         addPerfil(Perfil.CLIENTE);
