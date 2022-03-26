@@ -29,10 +29,10 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-
         try {
             CredentiaisDTO creds = new ObjectMapper().readValue(request.getInputStream(), CredentiaisDTO.class);
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(creds.getEmail(), creds.getSenha(), new ArrayList<>());
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+                    creds.getEmail(), creds.getSenha(), new ArrayList<>());
             Authentication authentication = authenticationManager.authenticate(authenticationToken);
             return authentication;
         } catch (Exception e) {
@@ -42,10 +42,11 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        String username = ((UserSpringSecurity) authResult.getPrincipal()).getUsername();
-        String token = jwtUtil.generateToken(username);
+        UserSpringSecurity user = ((UserSpringSecurity) authResult.getPrincipal());
+        String token = jwtUtil.generateToken(user);
         response.setHeader("access-control-expose-headers", "Authorization");
         response.setHeader("Authorization", "Bearer "+token);
+        response.setHeader("Authorities", "NADA ");
     }
 
     @Override

@@ -1,5 +1,7 @@
 package com.marhasoft.helpdesk.security;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -17,9 +19,13 @@ public class JWTUtil {
     @Value("${jwt.secret}")
     private String secret;
 
-    public String generateToken(String email) {
+    public String generateToken(UserSpringSecurity user) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        String authorities = mapper.writeValueAsString(user.getAuthorities());
         return Jwts.builder()
-                .setSubject(email)
+                .claim("authorities", authorities)
+                .setIssuer("Marha-HelpDesk")
+                .setSubject(user.getUsername())
                 .setExpiration(new Date(System.currentTimeMillis() + expiration))
                 .signWith(SignatureAlgorithm.HS512, secret.getBytes())
                 .compact();//Deixa a api mais performatica
